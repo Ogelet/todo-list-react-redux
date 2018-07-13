@@ -1,0 +1,1 @@
+export const CHANGE_TEXT_FILTER = 'CHANGE_TEXT_FILTER';

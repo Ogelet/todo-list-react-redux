@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {completedFilterDictionary} from "../presentational/CompletedFilter";
 import TodoItemContainer from "./TodoItemContainer";
 import PropTypes from "prop-types";
+import { connect } from 'react-redux';
 
 
 class TodoItemListContainer extends Component {
@@ -70,4 +71,6 @@ TodoItemListContainer.propTypes = {
 };
 
 
-export default TodoItemListContainer;
+export default connect(
+    state => ({ textFilter: state.textFilter }),
+)(TodoItemListContainer);

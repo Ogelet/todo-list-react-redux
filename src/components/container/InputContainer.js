@@ -1,41 +1,32 @@
 import React, {Component} from "react";
 import Input from './../presentational/Input';
 import PropTypes from "prop-types";
+import { connect } from 'react-redux';
+import { changeTextFilter } from '../../actions';
 
 class InputContainer extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            text: ''
-        };
-    }
-
     addItemHandler = () => {
-        this.props.addItemHandler(this.state.text);
+        this.props.addItemHandler(this.props.textFilter);
     }
 
     handleChange = (event) => {
-        this.setState({text: event.target.value}, () => {
-            this.props.filterItemsHandler(this.state.text);
-        });
+        this.props.changeTextFilter(event.target.value);
     }
 
     handleKeyPress = (event) => {
-        if (this.state.text && event.charCode === 13) {
-            this.props.addItemHandler(this.state.text);
+        if (this.props.textFilter && event.charCode === 13) {
+            this.props.addItemHandler(this.props.textFilter);
         }
     }
 
     clearInputHandler = () => {
-        this.setState({text: ''});
-        this.props.clearTextFilter();
+        this.props.changeTextFilter('');
     }
 
     render() {
         return (
             <Input
-                value={this.state.text}
+                value={this.props.textFilter}
                 onKeyPress={this.handleKeyPress}
                 handleChange={this.handleChange}
                 addItemHandler={this.addItemHandler}
@@ -48,8 +39,13 @@ class InputContainer extends Component {
 
 InputContainer.propTypes = {
     addItemHandler: PropTypes.func.isRequired,
-    filterItemsHandler: PropTypes.func.isRequired,
-    clearTextFilter: PropTypes.func.isRequired
+    changeTextFilter: PropTypes.func.isRequired,
+    textFilter: PropTypes.string.isRequired,
 };
 
-export default InputContainer;
+export default connect(
+    state => ({ textFilter: state.textFilter }),
+    {
+        changeTextFilter,
+    }
+)(InputContainer);

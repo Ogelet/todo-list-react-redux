@@ -12,7 +12,6 @@ class MainContainer extends Component {
 
         this.state = {
             completedFilter: completedFilterDictionary.showAll,
-            textFilter: '',
             todoItems: []
         };
 
@@ -49,10 +48,6 @@ class MainContainer extends Component {
     };
 
 
-    setTextFilter = (text) => {
-        this.setState({textFilter: text});
-    };
-
     setCompletedFilter = (val) => {
         this.setState({completedFilter: val});
     };
@@ -66,14 +61,11 @@ class MainContainer extends Component {
             <div>
                 <InputContainer
                     addItemHandler={this.addTodoItem}
-                    filterItemsHandler={this.setTextFilter}
-                    clearTextFilter={() => this.setTextFilter('')}
                 />
 
                 <CompletedFilter setCompletedFilter={this.setCompletedFilter}/>
                 <TodoItemListContainer
                     completedFilter={this.state.completedFilter}
-                    textFilter={this.state.textFilter}
                     todoItems={this.state.todoItems}
                     addTodoItemHandler={this.addTodoItem}
                     removeTodoItemHandler={this.removeTodoItem}
