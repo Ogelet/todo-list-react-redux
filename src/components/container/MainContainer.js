@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import InputContainer from "../container/InputContainer";
 import TodoItemListContainer from "./TodoItemListContainer";
-import CompletedFilter, {completedFilterDictionary} from "../presentational/CompletedFilter";
+import CompletedFilter from "../presentational/CompletedFilter";
 import Summary from "../presentational/Summary";
 
 let counter = 0;
@@ -11,7 +11,6 @@ class MainContainer extends Component {
         super();
 
         this.state = {
-            completedFilter: completedFilterDictionary.showAll,
             todoItems: []
         };
 
@@ -47,11 +46,6 @@ class MainContainer extends Component {
         this.setState({todoItems: todoItems});
     };
 
-
-    setCompletedFilter = (val) => {
-        this.setState({completedFilter: val});
-    };
-
     getTodoItemIndexById = (id) => this.state.todoItems.findIndex((item) => item.id === id)
 
     render() {
@@ -63,9 +57,8 @@ class MainContainer extends Component {
                     addItemHandler={this.addTodoItem}
                 />
 
-                <CompletedFilter setCompletedFilter={this.setCompletedFilter}/>
+                <CompletedFilter />
                 <TodoItemListContainer
-                    completedFilter={this.state.completedFilter}
                     todoItems={this.state.todoItems}
                     addTodoItemHandler={this.addTodoItem}
                     removeTodoItemHandler={this.removeTodoItem}

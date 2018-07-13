@@ -1,13 +1,13 @@
 import React, {Component} from "react";
-import {completedFilterDictionary} from "../presentational/CompletedFilter";
 import TodoItemContainer from "./TodoItemContainer";
 import PropTypes from "prop-types";
 import { connect } from 'react-redux';
+import completedFilterDictionary from '../../constants/completedFilters';
 
 
 class TodoItemListContainer extends Component {
-    constructor({todoItems, completedFilter = completedFilterDictionary.showAll, textFilter}) {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = {
             filteredTodoItems: []
@@ -72,5 +72,8 @@ TodoItemListContainer.propTypes = {
 
 
 export default connect(
-    state => ({ textFilter: state.textFilter }),
+    state => ({
+        textFilter: state.textFilter,
+        completedFilter: state.completedFilter,
+    }),
 )(TodoItemListContainer);

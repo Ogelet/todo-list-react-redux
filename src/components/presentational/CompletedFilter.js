@@ -1,25 +1,45 @@
 import React, {Fragment} from "react";
 import PropTypes from "prop-types";
+import { connect } from 'react-redux';
+import { changeCompletedFilter } from '../../actions';
+import completedFiltersMap from '../../constants/completedFilters';
 
-const completedFilterDictionary = {
-    showAll: null,
-    showCompleted: true,
-    showIncompleted: false
+class CompletedFilter extends React.Component {
+    setAll = () => {
+        this.props.changeCompletedFilter(
+            completedFiltersMap.showAll
+        );
+    }
+
+    setCompleted = () => {
+        this.props.changeCompletedFilter(
+            completedFiltersMap.showCompleted
+        );
+    }
+
+    setIncompleted = () => {
+        this.props.changeCompletedFilter(
+            completedFiltersMap.showIncompleted
+        );
+    }
+
+    render() {
+        return (
+            <Fragment>
+                <button onClick={this.setAll}>All</button>
+                <button onClick={this.setCompleted}>Completed</button>
+                <button onClick={this.setIncompleted}>Incompleted</button>
+            </Fragment>
+        );
+    }
 }
 
 
-const CompletedFilter = ({setCompletedFilter}) => (
-    <Fragment>
-        <button onClick={() => setCompletedFilter(completedFilterDictionary.showAll)}>All</button>
-        <button onClick={() => setCompletedFilter(completedFilterDictionary.showCompleted)}>Completed</button>
-        <button onClick={() => setCompletedFilter(completedFilterDictionary.showIncompleted)}>Incompleted</button>
-    </Fragment>
-);
-
-
 CompletedFilter.propTypes = {
-    setCompletedFilter: PropTypes.func.isRequired,
+    changeCompletedFilter: PropTypes.func.isRequired,
 };
 
-export default CompletedFilter;
-export {completedFilterDictionary};
+export default connect(
+    null,
+    { changeCompletedFilter },
+)(CompletedFilter);
