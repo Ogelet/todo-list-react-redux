@@ -8,6 +8,7 @@ const TodoItem = ({
     isCompleted, isModifiable, text, toggleIsModifiable, editTodoItemHandler,
     removeTodoItemHandler, toggleCompletedHandler
 }) => {
+
     return (
         <div>
             <input type="checkbox" checked={isCompleted} onChange={toggleCompletedHandler} />

@@ -1,21 +1,11 @@
-import {
-    CHANGE_TEXT_FILTER,
-    CHANGE_COMPLETED_FILTER,
-} from '../constants';
-import completedFiltersMap from '../constants/completedFilters';
+import { combineReducers } from 'redux';
 
-const initialState = {
-    textFilter: '',
-    completedFilter: completedFiltersMap.showAll,
-};
+import todos from './todos';
+import textFilter from './textFilter';
+import completedFilter from './completedFilter';
 
-export default function reducer(state = initialState, action) {
-    switch (action.type) {
-        case CHANGE_TEXT_FILTER:
-            return { ...state, textFilter: action.payload };
-        case CHANGE_COMPLETED_FILTER:
-            return { ...state, completedFilter: action.payload };
-        default:
-            return state;
-    }
-}
+export default combineReducers({
+    todos,
+    textFilter,
+    completedFilter,
+});

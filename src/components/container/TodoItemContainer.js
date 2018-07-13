@@ -1,10 +1,17 @@
 import React, {Component} from "react";
 import TodoItem from "../presentational/TodoItem";
 import PropTypes from "prop-types";
+import { connect } from 'react-redux';
+
+import {
+    toggleTodo,
+    deleteTodo,
+    editTodo,
+} from '../../actions';
 
 
 class TodoItemContainer extends Component {
-    constructor({todoItem}) {
+    constructor() {
         super();
 
         this.state = {
@@ -16,6 +23,7 @@ class TodoItemContainer extends Component {
         this.setState({isModifiable: !this.state.isModifiable});
     };
 
+
     render() {
         const todoItem = this.props.todoItem;
 
@@ -23,10 +31,10 @@ class TodoItemContainer extends Component {
             isCompleted={todoItem.isCompleted}
             isModifiable={this.state.isModifiable}
             text={todoItem.text}
-            removeTodoItemHandler = {this.props.removeTodoItemHandler}
-            editTodoItemHandler = {this.props.editTodoItemHandler}
+            removeTodoItemHandler = {this.props.deleteTodo}
+            editTodoItemHandler = {this.props.editTodo}
             toggleIsModifiable = {this.toggleIsModifiable}
-            toggleCompletedHandler = {this.props.toggleCompletedHandler}
+            toggleCompletedHandler = {this.props.toggleTodo}
         />
     }
 }
@@ -34,9 +42,16 @@ class TodoItemContainer extends Component {
 
 TodoItemContainer.propTypes = {
     todoItem: PropTypes.object.isRequired,
-    toggleCompletedHandler: PropTypes.func.isRequired,
-    removeTodoItemHandler: PropTypes.func.isRequired,
-    editTodoItemHandler: PropTypes.func.isRequired,
+    toggleTodo: PropTypes.func.isRequired,
+    deleteTodo: PropTypes.func.isRequired,
+    editTodo: PropTypes.func.isRequired,
 };
 
-export default TodoItemContainer;
+export default connect(
+    null,
+    (dispatch, ownprops) => ({
+        toggleTodo: () => dispatch(toggleTodo(ownprops.todoItem.id)),
+        deleteTodo: () => dispatch(deleteTodo(ownprops.todoItem.id)),
+        editTodo: e => dispatch(editTodo(ownprops.todoItem.id, e.target.value)),
+    }),
+)(TodoItemContainer);

@@ -1,5 +1,7 @@
 import React, {Fragment} from "react";
 import PropTypes from "prop-types";
+import { connect } from 'react-redux';
+import { summarySelector } from '../../selectors';
 
 const Summary = ({summaryCount, completedCount}) => (
     <Fragment>
@@ -15,4 +17,6 @@ Summary.propTypes = {
     completedCount: PropTypes.number.isRequired,
 };
 
-export default Summary;
+export default connect(
+    summarySelector,
+)(Summary);
